@@ -1,0 +1,95 @@
+<div class="dialog-block">
+    <div *ngIf="data.dialogType === 'addBook'">
+        <h1 mat-dialog-title>Create New Book</h1>
+        <mat-dialog-content>
+            <form (ngSubmit)="addBook()" class="dialog">
+                <mat-form-field style="width:400px; padding: 12px 0">
+                    <input matInput placeholder="Title" [formControl]="title">
+                    <mat-error *ngIf="description.hasError('required')">
+                        Title is required!
+                    </mat-error>
+                </mat-form-field>
+                <br/>
+                <mat-form-field style="width:400px; padding: 12px 0">
+                    <input type="text" matInput placeholder="Author" [formControl]="author">
+                    <mat-error *ngIf="author.hasError('required')">
+                        Author is required!
+                    </mat-error>
+                </mat-form-field>
+                <br/>
+                <mat-form-field style="width:400px; padding: 12px 0">
+                    <textarea  type="text" matInput placeholder="Description" [formControl]="description" rows="4"></textarea>
+                    <mat-error *ngIf="description.hasError('required')">
+                        Description is required!
+                    </mat-error>
+                </mat-form-field>
+                <br/>
+                <mat-form-field style="width:400px; padding: 12px 0">
+                    <input type="number" matInput placeholder="Price" [formControl]="price">
+                    <mat-error *ngIf="price.hasError('required')">
+                        Price is required!
+                    </mat-error>
+                </mat-form-field>
+                <br/>
+                <label for="bookcover-input" mat-stroked-button>
+                    <input 
+                        accept="image/*" 
+                        id="bookcover-input" 
+                        multiple type="file" 
+                        mat-raised-button 
+                        color="primary"
+                        [formControl]="cover"
+                        name="picFile"
+                        style="display: none"
+                        (change)="preview()"
+                    />
+                    <span class="btn-bookcover-add">Add cover</span>
+                </label>
+                <br/>
+                <div *ngIf="imgURL">
+                    <img [src]="imgURL" alt="Book cover" style="height: 100px">
+                </div>
+                <br/>
+                <button mat-raised-button color="primary" type="submit" style="margin-right: 15px">Create book</button>
+                <button mat-button color="primary" mat-dialog-close>Cancel</button>
+            </form>
+        </mat-dialog-content>
+    </div>
+
+    <div *ngIf="data.dialogType === 'editUser'">
+        <h1 mat-dialog-title>Edit user</h1>
+        <mat-dialog-content>
+            <mat-form-field style="width:400px; padding: 12px 0">
+                <input 
+                    matInput 
+                    [formControl]="userEmail"
+                    placeholder="Email"
+                    value={{data.userEmail}}
+                >
+                <mat-error *ngIf="userEmail.hasError('required')">
+                    Email is required!
+                </mat-error>
+                <mat-error *ngIf="userEmail.hasError('email')">
+                    Email is incorrect!
+                </mat-error>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button 
+            mat-raised-button 
+            color="primary" 
+            type="button" 
+            style="margin-right: 15px" 
+            (click)="editUser(userEmail.value === '' ? data.userEmail : userEmail.value, data.userId)">
+                Edit
+            </button>
+            <button mat-button color="primary" mat-dialog-close>Cancel</button>
+        </mat-dialog-actions>
+    </div>
+
+    <div *ngIf="data.dialogType === 'deleteUser'">
+        <h1 mat-dialog-title>Do you really want to delete user?</h1>
+        <button mat-raised-button color="primary" type="button" style="margin-right: 15px" (click)="deleteUser(data.userId)">Yes</button>
+        <button mat-button color="primary" mat-dialog-close>No</button>
+    </div>
+</div>

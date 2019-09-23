@@ -1,0 +1,50 @@
+<div>
+    <div class="search-block">
+        <mat-form-field class="search-block-input--wrap" type="search">
+            <input matInput placeholder="Search..." [formControl]="bookTitle">
+        </mat-form-field>
+    </div>
+    <div class="home-grid">
+        <ng-container *ngIf="searchedBooksArr.length === 0 && searchValue === false">
+            <div *ngFor="let book of books" class="card--wrap">
+                <mat-card class="mat-elevation-z4 card">
+                    <div class="card-img">
+                        <img src={{book.cover}} alt="Bookcover">
+                    </div>
+                    <mat-card-title>{{book.title}}</mat-card-title>
+                    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+                    <mat-card-content>
+                        {{ book.description | limitTo:20 }} 
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="addBookToCart(book)">
+                            {{book.price}} грн
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="searchedBooksArr.length > 0">
+            <div *ngFor="let book of searchedBooksArr" class="card--wrap">
+                <mat-card class="mat-elevation-z4 card">
+                    <div class="card-img">
+                        <img src={{book.cover}} alt="Bookcover">
+                    </div>
+                    <mat-card-title>{{book.title}}</mat-card-title>
+                    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+                    <mat-card-content>
+                        {{ book.description | limitTo:20 }} 
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="addBookToCart(book)">
+                            {{book.price}} грн
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="searchedBooksArr.length === 0 && searchValue">
+            <h1 class="nothing-found">Nothing found</h1>
+        </ng-container>
+    </div>
+</div>

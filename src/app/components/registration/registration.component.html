@@ -1,0 +1,36 @@
+<div class="registration">
+        <h2 class="registration-title">Registration</h2>
+        <div class="registration-form--wrap">
+            <mat-card class="registration-form-card">
+                <form class="registration-form" [formGroup]="form" (ngSubmit)="registerNewUser()">
+                    <mat-form-field class="registration-form-input">
+                        <input matInput placeholder="Email" formControlName="email" [formGroup]="form">
+                        <mat-error *ngIf="form.get('email').hasError('required')">
+                            Email is required!
+                        </mat-error>
+                        <mat-error *ngIf="form.get('email').hasError('email')">
+                            Email is incorrect!
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="registration-form-input">
+                        <input matInput type="password" placeholder="Password" formControlName="password" [formGroup]="form">
+                        <mat-error *ngIf="form.get('password').hasError('required')">
+                            Password is required!
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="registration-form-input">
+                        <input type="password" matInput placeholder="Confirm Password" formControlName="passwordCheck" [formGroup]="form">
+                        <mat-error *ngIf="form.get('passwordCheck').getError('MatchPassword')">
+                            Password does not match!
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <button mat-raised-button color="primary">
+                        SignUp
+                    </button>
+                </form>
+            </mat-card>
+        </div>
+    </div>

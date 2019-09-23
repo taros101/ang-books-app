@@ -1,0 +1,15 @@
+<div>
+    <h1 class="lazy-loading-title">Lazy Loading</h1>
+    <div class="lazy-grid">
+        <div *ngFor="let book of books" class="card--wrap">
+            <mat-card class="mat-elevation-z4 card">
+                <div class="card-img">
+                    <img src={{book.cover}} alt="Bookcover">
+                </div>
+                <mat-card-title>{{book.title}}</mat-card-title>
+                <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+                <mat-card-content>{{book.description}}</mat-card-content>
+            </mat-card>
+        </div>
+    </div>    
+</div>

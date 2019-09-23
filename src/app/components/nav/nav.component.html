@@ -1,0 +1,57 @@
+<mat-toolbar color="primary" class="toolbar mat-elevation-z4" >
+    <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" [ngStyle]="{'box-shadow': 'none'}">
+        <mat-button-toggle value="bold" [routerLink]="['/']" class="toolbar-btn" >
+            Home
+        </mat-button-toggle>
+        <ng-container *ngIf="!auth; else elseTemplate">
+            <mat-button-toggle value="bold" [routerLink]="['/registration']" class="toolbar-btn">
+                Registration
+            </mat-button-toggle>
+            <mat-button-toggle value="bold" [routerLink]="['/login']" class="toolbar-btn">
+                Login
+            </mat-button-toggle>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <mat-button-toggle *ngIf="role === 'admin'" value="bold" [routerLink]="['/admin']" class="toolbar-btn">
+                Admin
+            </mat-button-toggle>
+            <mat-button-toggle value="bold" [routerLink]="['/lazy-load/lazy']" class="toolbar-btn">
+                Lazy Loading
+            </mat-button-toggle>
+            <h3 style="padding: 14px 30px; line-height: 36px;">Hello {{email}}</h3>
+            <button 
+                mat-icon-button 
+                [matMenuTriggerFor]="cart" 
+                [matBadge]="cartArr.length > 0 ? cartArr.length : null" 
+                matBadgeColor="accent"
+            >
+                <mat-icon aria-hidden="false" aria-label="Edit">shopping_cart</mat-icon>
+            </button>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <div class="avatar-wrap">
+                    <img src={{avatar}} alt="Avatar" class="avatar">
+                </div>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item [routerLink]="['/profile']">Profile</button>
+                <button mat-menu-item (click)="logout()">Logout</button>
+            </mat-menu>
+            <mat-menu #cart="matMenu" xPosition="before" [class]="custom" style="max-width: 600px">
+                <div mat-menu-item *ngIf="cartArr.length === 0">Cart is empty</div>
+                <button mat-menu-item *ngFor="let cartItem of cartArr" (click)="$event.stopPropagation();" class="menu-item" >
+                    <span style="padding-right: 10px">{{cartItem.title}}</span>
+                    <div class="menu-item-nav">
+                        <button mat-icon-button (click)="addBookToCart($event, cartItem)">
+                            <mat-icon aria-hidden="false" aria-label="Edit" style="margin-right: 0">add</mat-icon>
+                        </button>
+                        <span style="padding: 0 10px">{{cartItem.quantity}}</span>
+                        <button mat-icon-button (click)="removeBookFromCart($event, cartItem)">
+                            <mat-icon aria-hidden="false" aria-label="Edit" style="margin-right: 0">remove</mat-icon>
+                        </button>
+                    </div>
+                </button>
+                <div mat-menu-item *ngIf="cartArr.length !== 0" (click)="$event.stopPropagation();">Total count: {{totalCount}} UAH</div>
+            </mat-menu>
+        </ng-template>
+    </mat-button-toggle-group>
+</mat-toolbar>

@@ -1,0 +1,17 @@
+<div class="profile">
+    <img src={{avatar}} alt="Avatar" class="profile-avatar">
+    <h3 class="profile-title">Hello {{email}}!</h3>
+    <label for="profile-avatar-change" mat-stroked-button>
+        <input 
+            accept="image/*" 
+            id="profile-avatar-change" 
+            multiple type="file" 
+            mat-raised-button 
+            color="primary"
+            name="picFile"
+            style="display: none"
+            (change)='uploadAvatar()'
+        />
+        <span class="btn-change-avatar">Change avatar</span>
+    </label>
+</div>
