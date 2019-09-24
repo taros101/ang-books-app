@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginService } from './common.service';
+import { LoginService } from './common-service';
 import * as jwt_decode from "jwt-decode";
 import { environment } from 'src/environments/environment';
 
@@ -22,16 +22,7 @@ export default class AuthService {
         }
         return false
     }
-
-    public getHeader() {
-        const localData = JSON.parse(localStorage.getItem('token'));
     
-        return {headers: new  HttpHeaders({ 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localData.token}`
-        })};
-    }
-
     post(url: string, body: any): Observable<any> {
         return this.http.post<any>(`${this.hostUrl}${url}`, body)
     }
@@ -54,5 +45,12 @@ export default class AuthService {
         }))
 
         return this.http.get<any>(`${this.hostUrl}users/${id}`, headers)
+    }
+
+    getToken() {
+        const localData = JSON.parse(localStorage.getItem('token'));
+        if (localData) {
+            return localData.token
+        }
     }
 }

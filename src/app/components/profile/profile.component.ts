@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/common.service';
-import UsersService  from '../../services/users.service';
+import { LoginService } from '../../services/common-service';
+import UsersService  from '../../services/users-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

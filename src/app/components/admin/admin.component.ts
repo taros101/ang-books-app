@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import BooksService from '../../services/books.service';
-import UsersService from '../../services/users.service';
+import BooksService from '../../services/books-service';
+import UsersService from '../../services/users-service';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -3,7 +3,6 @@ import { Subject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
-import  AuthService  from './auth.service';
 
 @Injectable()
 export default class BooksService {
@@ -11,7 +10,6 @@ export default class BooksService {
     hostUrl = environment.url;
     constructor(
         private http: HttpClient,
-        private authService: AuthService,
         ) { }
 
     getAllBooks(): Observable<any> {
@@ -19,8 +17,7 @@ export default class BooksService {
     }
 
     addBook(book: any): Observable<any> {
-        let header = this.authService.getHeader()
-        return this.http.post<any>(`${this.hostUrl}books/addBook`, book, header)
+        return this.http.post<any>(`${this.hostUrl}books/addBook`, book)
     }
 
     searchBook(title: string): Observable<any> {

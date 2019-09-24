@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import BooksService from '../../services/books.service';
+import BooksService from '../../services/books-service';
 
 @Component({
   selector: 'app-lazy-loading',

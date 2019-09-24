@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import AuthService from '../../services/auth.service';
+import AuthService from '../../services/auth-service';
 import { Subscription } from 'rxjs';
-import { LoginService } from '../../services/common.service';
+import { LoginService } from '../../services/common-service';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/common.service';
+import { CartService } from '../../services/common-service';
 
 @Component({
   selector: 'app-nav',

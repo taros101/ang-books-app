@@ -16,17 +16,18 @@ import 'hammerjs';
 
 import { Dialog } from './components/admin/admin.component';
 
-import { TruncatePipe }   from './limit.pipe';
+import { TruncatePipe }   from './pipes/limit.pipe';
 
 
-import AuthService from './services/auth.service';
-import BooksService from './services/books.service';
-import UsersService from './services/users.service';
+import AuthService from './services/auth-service';
+import BooksService from './services/books-service';
+import UsersService from './services/users-service';
+import { CustomHttpInterceptorService } from './services/interceptor';
 
 import { NavComponent } from './components/nav/nav.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { LoginService } from './services/common.service';
+import { LoginService } from './services/common-service';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { LoginService } from './services/common.service';
     CoreModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
     AuthService,
     BooksService,
     UsersService,

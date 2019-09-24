@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import BooksService from '../../services/books.service';
-import { CartService } from '../../services/common.service';
+import BooksService from '../../services/books-service';
+import { CartService } from '../../services/common-service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 
