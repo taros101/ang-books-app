@@ -6,19 +6,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
-
-export interface Book {
-  _id: number;
-  title: string;
-  author: string;
-  description: string;
-  price: number;
-}
-
-export interface User {
-  _id: number;
-  email: string;
-}
+import { Book } from '../../shared/models/book-model';
+import { User } from '../../shared/models/user-model';
 
 export interface DialogData {
   dialogType: 'addBook' | 'editUser' | 'deleteUser';
@@ -131,7 +120,7 @@ export class Dialog implements OnInit {
     ) { }
   DialogRef: MatDialogRef<Dialog>;
 
-  imgURL: any;
+  imgURL: string;
 
   title = new FormControl('', [
     Validators.required

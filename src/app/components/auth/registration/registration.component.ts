@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import AuthService from '../../services/auth-service';
+import AuthService from '../../../services/auth-service';
 import { AbstractControl } from '@angular/forms';
-import { LoginService } from '../../services/common-service';
+import { LoginService } from '../../../services/common-service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

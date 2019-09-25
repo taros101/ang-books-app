@@ -3,7 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginService } from './common-service';
 import * as jwt_decode from "jwt-decode";
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export default class AuthService {

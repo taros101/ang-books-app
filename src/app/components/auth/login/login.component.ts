@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import AuthService from '../../services/auth-service';
-import { LoginService } from '../../services/common-service';
+import AuthService from '../../../services/auth-service';
+import { LoginService } from '../../../services/common-service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -12,8 +12,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginDatas: Subscription;
-
   formLogin = new FormGroup({
     email: new FormControl('', [
         Validators.required,
@@ -30,7 +28,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar
   ) {
-    this.loginDatas = this.loginService.loginData$.subscribe(
+    this.loginService.loginData$.subscribe(
       loginData => {
         this.formLogin.patchValue({
           email: loginData.email,
