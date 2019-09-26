@@ -16,11 +16,11 @@ export class ProfileComponent implements OnInit {
     private usersService: UsersService,
     private snackBar: MatSnackBar,
   ) {
-    this.loginService.email$.subscribe(
+    this.usersService.email$.subscribe(
       email => {this.email = email}
     );
 
-    this.loginService.avatar$.subscribe(
+    this.usersService.avatar$.subscribe(
       avatar => {this.avatar = avatar}
     );
 
@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
           })
         })
 
-      this.loginService.getAvatar(newAvatar)
+      this.usersService.getAvatar(newAvatar)
 
       const authLocalStore = JSON.parse(localStorage.getItem('auth'));
       const authData = {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import AuthService from '../../../services/auth-service';
 import { LoginService } from '../../../services/login-service';
+import  UsersService  from '../../../services/users-service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private loginService: LoginService,
+    private userService: UsersService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -52,9 +54,9 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         this.authService.get(response.data).subscribe((data: any) => {
           const userData = data.data
-          this.loginService.getEmail(userData.email)
-          this.loginService.getAvatar(userData.img)
-          this.loginService.getRole(userData.role)
+          this.userService.getEmail(userData.email)
+          this.userService.getAvatar(userData.img)
+          this.userService.getRole(userData.role)
 
           localStorage.setItem('auth', JSON.stringify(userData))
         })

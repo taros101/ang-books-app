@@ -5,6 +5,7 @@ import { LoginService } from '../../services/login-service';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart-service';
 import { Book } from '../../shared/models/book-model';
+import  UsersService  from '../../services/users-service';
 
 @Component({
   selector: 'app-nav',
@@ -22,21 +23,22 @@ export class NavComponent implements OnInit {
     private authService: AuthService,
     private loginService: LoginService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private userService: UsersService,
   ) {
     this.loginService.auth$.subscribe(
       authData => {this.auth = authData}
     );
 
-    this.loginService.email$.subscribe(
+    this.userService.email$.subscribe(
       email => {this.email = email}
     );
 
-    this.loginService.avatar$.subscribe(
+    this.userService.avatar$.subscribe(
       avatar => {this.avatar = avatar}
     );
 
-    this.loginService.role$.subscribe(
+    this.userService.role$.subscribe(
       role => {this.role = role}
     );
     this.cartService.cart$.subscribe(

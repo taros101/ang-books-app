@@ -12,7 +12,7 @@ export default class UsersService {
     constructor(
         private http: HttpClient,
         ) { }
-
+    
     public getAllUsers(): Observable<User[]> {
         return this.http.get<any>(`${this.hostUrl}users`)
     }
@@ -27,5 +27,23 @@ export default class UsersService {
 
     public deleteUser(userId: string): Observable<Response> {
         return this.http.delete<any>(`${this.hostUrl}users/deleteUser/${userId}`)
+    }
+
+    private emailSource = new Subject<string>();
+    private avatarSource = new Subject<string>();
+    private roleSource = new Subject<string>();
+
+    email$ = this.emailSource.asObservable();
+    avatar$ = this.avatarSource.asObservable();
+    role$ = this.roleSource.asObservable();
+
+    getEmail(email: string) {
+        this.emailSource.next(email);
+    }
+    getAvatar(img: string) {
+        this.avatarSource.next(img);
+    }
+    getRole(role: string) {
+        this.roleSource.next(role);
     }
 }
