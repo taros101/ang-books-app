@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import AuthService from '../../../services/auth-service';
 import { AbstractControl } from '@angular/forms';
-import { LoginService } from '../../../services/common-service';
+import { LoginService } from '../../../services/login-service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -45,30 +45,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   registerNewUser() {
-    if (this.form.get('email').hasError('required')) {
-      return this.snackBar.open('Email is required!', 'close', {
-        duration: 2000,
-      })
+    if(this.form.invalid) {
+      return;
     }
-
-    if (this.form.get('email').hasError('email')) {
-      return this.snackBar.open('Email is incorrect!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.form.get('password').hasError('required')) {
-      return this.snackBar.open('Password is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.form.get('passwordCheck').getError('MatchPassword')) {
-      return this.snackBar.open('Password does not match!', 'close', {
-        duration: 2000,
-      })
-    }
-
+    
     const form = {
       email: this.form.get('email').value,
       password: this.form.get('password').value,
@@ -88,7 +68,6 @@ export class RegistrationComponent implements OnInit {
         });
       },
       (error: any) => {
-        console.log(error)
         return this.snackBar.open(error.error.message, 'close', {
           duration: 2000,
         })

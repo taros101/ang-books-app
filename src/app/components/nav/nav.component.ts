@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import AuthService from '../../services/auth-service';
 import { Subscription } from 'rxjs';
-import { LoginService } from '../../services/common-service';
+import { LoginService } from '../../services/login-service';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/common-service';
+import { CartService } from '../../services/cart-service';
+import { Book } from '../../shared/models/book-model';
 
 @Component({
   selector: 'app-nav',
@@ -15,7 +16,7 @@ export class NavComponent implements OnInit {
   email: string = '';
   avatar: string = '';
   role: string = '';
-  cartArr: any[] = [];
+  cartArr: Book[] = [];
   totalCount: number = 0;
   constructor(
     private authService: AuthService,
@@ -62,7 +63,7 @@ export class NavComponent implements OnInit {
     }
    }
 
-   totalCartCount(booksArr: any[]) {
+   totalCartCount(booksArr: Book[]) {
       booksArr.forEach((book: any) => {
         this.totalCount += book.quantity * book.price
       });
@@ -79,12 +80,12 @@ export class NavComponent implements OnInit {
     this.router.navigateByUrl("/");
   }
 
-  addBookToCart($event, book: any) {
+  addBookToCart($event, book: Book) {
     $event.stopPropagation();
     this.cartService.addBookToCart(book)
   }
 
-  removeBookFromCart($event, book: any) {
+  removeBookFromCart($event, book: Book) {
     $event.stopPropagation();
     this.cartService.removeBookFromCart(book)
   }

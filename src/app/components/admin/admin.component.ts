@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import BooksService from '../../services/books-service';
 import UsersService from '../../services/users-service';
 import {MatTableDataSource} from '@angular/material/table';
-import { FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { Book } from '../../shared/models/book-model';
@@ -20,8 +20,8 @@ export interface DialogData {
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  booksSource: any;
-  usersSource: any;
+  booksSource = new MatTableDataSource<Book>();
+  usersSource = new MatTableDataSource<User>();
 
   constructor(
     public dialog: MatDialog,
@@ -34,8 +34,8 @@ export class AdminComponent implements OnInit {
   @ViewChild('paginator2', {static: true}) paginator2: MatPaginator;
   DialogRef: MatDialogRef<Dialog>;
 
-  displayedColumns: string[] = ['number', 'title', 'author', 'description', 'price'];
-  usersColumns: string[] = ['number', 'email', 'edit-delete'];
+  displayedColumns: string[] = ['title', 'author', 'description', 'price'];
+  usersColumns: string[] = ['email', 'edit-delete'];
 
 
   openDialog() {
@@ -122,26 +122,29 @@ export class Dialog implements OnInit {
 
   imgURL: string;
 
-  title = new FormControl('', [
-    Validators.required
-  ]);
-  author = new FormControl('', [
-    Validators.required
-  ]);
-  description = new FormControl('', [
-    Validators.required
-  ]);
-  cover = new FormControl('', [
-    Validators.required
-  ]);
-  price = new FormControl('', [
-    Validators.required
-  ]);
-  userEmail = new FormControl('', [
-    Validators.required,
-    Validators.email
-  ])
+  bookForm = new FormGroup({
+    title: new FormControl('', [
+      Validators.required
+    ]),
+    author: new FormControl('', [
+      Validators.required
+    ]),
+    description: new FormControl('', [
+      Validators.required
+    ]),
+    cover: new FormControl('', [
+      Validators.required
+    ]),
+    price: new FormControl('', [
+      Validators.required
+    ])
+  })
 
+  editUserForm = new FormGroup({
+    userEmail: new FormControl('', [
+      Validators.required
+    ])
+  })
   async preview() {
     let path: any = document.querySelector("#bookcover-input") as HTMLElement;
     let bookCover: any;
@@ -160,65 +163,40 @@ export class Dialog implements OnInit {
   });
 
   async addBook() {
-    if (this.title.hasError('required')) {
-      return this.snackBar.open('Title is required!', 'close', {
-        duration: 2000,
-      })
+    if(this.bookForm.invalid) {
+      return;
+    }
+    
+    let path: any = document.querySelector("#bookcover-input") as HTMLElement;
+    let bookCover: any;
+    let file = path.files[0];
+
+    await this.toBase64(file).then((json) => bookCover = json);
+
+    const data = {
+        title: this.bookForm.get('title').value,
+        author: this.bookForm.get('author').value,
+        description: this.bookForm.get('description').value,
+        cover: bookCover,
+        price: this.bookForm.get('price').value,
+        quantity: 0
     }
 
-    if (this.author.hasError('required')) {
-      return this.snackBar.open('Author is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.description.hasError('required')) {
-      return this.snackBar.open('Description is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.price.hasError('required')) {
-      return this.snackBar.open('Price is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.cover.hasError('required')) {
-      return this.snackBar.open('Cover is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-  let path: any = document.querySelector("#bookcover-input") as HTMLElement;
-  let bookCover: any;
-  let file = path.files[0];
-
-  await this.toBase64(file).then((json) => bookCover = json);
-
-  const data = {
-      title: this.title.value,
-      author: this.author.value,
-      description: this.description.value,
-      cover: bookCover,
-      price: this.price.value
-  }
-
-  this.booksService.addBook(data).subscribe(
-      response => {
-        this.dialogRef.close(data);
-        this.snackBar.open(`${response.message}`, 'close', {
-          duration: 2000
+    this.booksService.addBook(data).subscribe(
+        response => {
+          this.dialogRef.close(data);
+          this.snackBar.open(`${response.message}`, 'close', {
+            duration: 2000
+          })
         })
-      })
   }
 
   
-  async editUser(newEmail: string, userId: string) {
+  async editUserFunc(newEmail: string, userId: string) {
     const data = {
       newEmail
     }
-
+    
     this.usersService.editUser(userId, data).subscribe(response => {
       this.dialogRef.close();
       this.snackBar.open(`${response.message}`, 'close', {

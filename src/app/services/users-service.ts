@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { User } from '../shared/models/user-model';
+import { Response } from '../shared/models/response-model';
 
 @Injectable()
 export default class UsersService {
@@ -11,19 +13,19 @@ export default class UsersService {
         private http: HttpClient,
         ) { }
 
-    getAllUsers(): Observable<any> {
+    public getAllUsers(): Observable<User[]> {
         return this.http.get<any>(`${this.hostUrl}users`)
     }
 
-    changeAvatar(userId: any, data: any): Observable<any> {
+    public changeAvatar(userId: string, data: object): Observable<Response> {
         return this.http.put<any>(`${this.hostUrl}users/${userId}`, data)
     }
 
-    editUser(userId: string, data: any): Observable<any> {
+    public editUser(userId: string, data: object): Observable<Response> {
         return this.http.put<any>(`${this.hostUrl}users/editUser/${userId}`, data)
     }
 
-    deleteUser(userId: any): Observable<any> {
+    public deleteUser(userId: string): Observable<Response> {
         return this.http.delete<any>(`${this.hostUrl}users/deleteUser/${userId}`)
     }
 }

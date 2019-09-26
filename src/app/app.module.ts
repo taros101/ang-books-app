@@ -27,7 +27,7 @@ import { CustomHttpInterceptorService } from './core/interceptors/interceptor';
 import { NavComponent } from './components/nav/nav.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { LoginService } from './services/common-service';
+import { LoginService } from './services/login-service';
 
 
 @NgModule({

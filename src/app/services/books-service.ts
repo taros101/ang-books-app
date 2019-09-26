@@ -3,6 +3,8 @@ import { Subject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Book } from '../shared/models/book-model';
+import { Response } from '../shared/models/response-model';
 
 @Injectable()
 export default class BooksService {
@@ -12,15 +14,15 @@ export default class BooksService {
         private http: HttpClient,
         ) { }
 
-    getAllBooks(): Observable<any> {
+    public getAllBooks(): Observable<Book[]> {
         return this.http.get<any>(`${this.hostUrl}books`)
     }
 
-    addBook(book: any): Observable<any> {
+    public addBook(book: object): Observable<Response> {
         return this.http.post<any>(`${this.hostUrl}books/addBook`, book)
     }
 
-    searchBook(title: string): Observable<any> {
+    public searchBook(title: string): Observable<Book[]> {
         return this.http.get<any>(`${this.hostUrl}books/` + title)
             .pipe(catchError(err => of(null)));
     }

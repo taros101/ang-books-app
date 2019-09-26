@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import AuthService from '../../../services/auth-service';
-import { LoginService } from '../../../services/common-service';
+import { LoginService } from '../../../services/login-service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -39,22 +39,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.formLogin.get('email').hasError('required')) {
-      return this.snackBar.open('Email is required!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.formLogin.get('email').hasError('email')) {
-      return this.snackBar.open('Email is incorrect!', 'close', {
-        duration: 2000,
-      })
-    }
-
-    if (this.formLogin.get('password').hasError('required')) {
-      return this.snackBar.open('Password is required!', 'close', {
-        duration: 2000,
-      })
+    if(this.formLogin.invalid) {
+      return;
     }
 
     const form = {
