@@ -51,11 +51,12 @@ export class LoginComponent implements OnInit {
     this.authService.post('login', form).subscribe(
       (response: any) => {
         this.authService.get(response.data).subscribe((data: any) => {
-          this.loginService.getEmail(data.email)
-          this.loginService.getAvatar(data.img)
-          this.loginService.getRole(data.role)
+          const userData = data.data
+          this.loginService.getEmail(userData.email)
+          this.loginService.getAvatar(userData.img)
+          this.loginService.getRole(userData.role)
 
-          localStorage.setItem('auth', JSON.stringify(data))
+          localStorage.setItem('auth', JSON.stringify(userData))
         })
 
         this.router.navigateByUrl("/");

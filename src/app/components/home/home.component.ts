@@ -41,9 +41,9 @@ export class HomeComponent implements OnInit {
         return this.booksService.searchBook(title);
       })
     ).subscribe(res => {
-      res === undefined
+      res.data === undefined
       ? this.searchedBooksArr = []
-      : this.searchedBooksArr = res
+      : this.searchedBooksArr = res.data
     });
   }
 

@@ -22,7 +22,7 @@ export default class BooksService {
         return this.http.post<any>(`${this.hostUrl}books/addBook`, book)
     }
 
-    public searchBook(title: string): Observable<Book[]> {
+    public searchBook(title: string): Observable<Response> {
         return this.http.get<any>(`${this.hostUrl}books/` + title)
             .pipe(catchError(err => of(null)));
     }
