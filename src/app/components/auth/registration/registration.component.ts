@@ -88,6 +88,7 @@ export class RegistrationComponent implements OnInit {
         });
       },
       (error: any) => {
+        console.log(error)
         return this.snackBar.open(error.error.message, 'close', {
           duration: 2000,
         })

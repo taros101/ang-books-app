@@ -63,9 +63,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.post('login', form).subscribe(
-      (data: any) => {
-        this.authService.get(data.data).subscribe((response: any) => {
-          const data = response.data
+      (response: any) => {
+        this.authService.get(response.data).subscribe((data: any) => {
           this.loginService.getEmail(data.email)
           this.loginService.getAvatar(data.img)
           this.loginService.getRole(data.role)
